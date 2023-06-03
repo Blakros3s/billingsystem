@@ -12,26 +12,26 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Order ID</th>
+                <th>Bill ID</th>
                 <th>Items</th>
                 <th>Seller</th>
-                <th>Buyer</th>
+                <th>Customer</th>
                 <th>Category</th>
                 <th>Amount</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            {% for order in purchase %}
+            {% for bill in bills %}
                 <tr>
-                    <td>{{ order.order_no }}</td>
-                    <td>{{ order.item }}</td>
-                    <td>{{ order.seller }}</td>
-                    <td>{{ order.buyer }}</td>
-                    <td>{{ order.category }}</td>
-                    <td>{{ order.amount }}</td>
+                    <td>{{ bill.invoice_no }}</td>
+                    <td>{{ bill.item }}</td>
+                    <td>{{ bill.seller_name }}</td>
+                    <td>{{ bill.customer_name }}</td>
+                    <td>{{ bill.category }}</td>
+                    <td>{{ bill.amount }}</td>
                     <td> 
-                        <a href="{% url 'generate-bill' order.id %}" class="btn btn-secondary btn-sm">Generate Bill</a>
+                        <a href="{% url 'view-bill' bill.id %}" class="btn btn-secondary btn-sm">View</a>
                     </td>
                 </tr>
             {% endfor %}

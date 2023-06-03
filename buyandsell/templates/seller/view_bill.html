@@ -1,0 +1,44 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Billing Information
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4">
+                <h1 class="text-center mb-4"><i class="fas fa-file-invoice"></i> Billing Information</h1>
+                <div class="mb-4 border-bottom">
+                    <h5 class="card-title">Invoice No: {{ bill.invoice_no }}</h5>
+                    <p class="card-text">Date: {{ bill.created_at|date:"Y-m-d" }}</p>
+                </div>
+                <div class="mb-4 border-bottom">
+                    <h5 class="card-title">Seller Information:</h5>
+                    <p class="card-text">Name: {{ bill.seller_name }}</p>
+                </div>
+                <div class="mb-4 border-bottom">
+                    <h5 class="card-title">Customer Information:</h5>
+                    <p class="card-text">Name: {{ bill.customer_name }}</p>
+                </div>
+                <div class="mb-4 border-bottom">
+                    <h5 class="card-title">Product Details:</h5>
+                    <p class="card-text">Item: {{ bill.item }}</p>
+                    <p class="card-text">Category: {{ bill.category }}</p>
+                    <p class="card-text">Order No: {{ bill.order_no }}</p>
+                </div>
+                <div class="mb-4 border-bottom">
+                    <h5 class="card-title">Billing Amount:</h5>
+                    <p class="card-text">Amount (excluding VAT): Rs. {{ excluding|floatformat:2 }}</p>
+                    <p class="card-text">VAT (13%)</p>
+                    <p class="card-text">Total Amount (including VAT): Rs. {{ bill.amount }}</p>
+                </div>
+                <button type="button" class="btn btn-secondary btn-lg d-block mx-auto" onclick="window.print()"><i class="fas fa-print"></i> Print Invoice</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

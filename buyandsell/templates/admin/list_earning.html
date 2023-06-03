@@ -1,0 +1,35 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Seller List
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4">
+                <h1 class="text-center mb-4"><i class="fas fa-users"></i> Seller List</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Seller Name</th>
+                            <th scope="col">Lifetime Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for seller_name, earnings in lifetime_earnings.items %}
+                        <tr>
+                            <td>{{ seller_name }}</td>
+                            <td>{{ earnings }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

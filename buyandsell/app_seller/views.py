@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from app_buyer.models import *
+import random
 
 # Create your views here.
 def sellerpage(request):
@@ -60,3 +61,39 @@ def order_list(request):
         'purchase': purchase
      }
     return render(request, 'seller/list_order.html', context)
+
+def bill_generate(request, id):
+    purchase = Purchase.objects.get(id=id)
+    context = {
+        'purchase': purchase
+     }
+    return render(request, 'seller/generate_bill.html', context)
+
+def bill_update(request):
+    if request.method == "POST":
+        bill = Bill()
+        bill.item = request.POST.get('item')
+        bill.amount = request.POST.get('amount')
+        bill.category = request.POST.get('category')
+        bill.seller_name = request.POST.get('seller')
+        bill.customer_name = request.POST.get('buyer')
+        bill.order_no = request.POST.get('order_no')
+        bill.invoice_no = random.randint(10000000,100000000)
+        bill.save()
+        return redirect('list-order')
+    return redirect('list-order')
+
+def bill_list(request):
+    bills = Bill.objects.filter(seller_name=request.user.get_full_name())
+    context = {
+        'bills': bills
+     }
+    return render(request, 'seller/list_bill.html', context)
+
+def bill_view(request, id):
+    bill = Bill.objects.get(id=id)
+    excluding_vat = float(bill.amount) / 1.13
+    context = {
+        'bill': bill, 'excluding': excluding_vat
+     }
+    return render(request, 'seller/view_bill.html', context)

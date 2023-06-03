@@ -1,0 +1,65 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Update Product
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h1 class="text-center mb-4"><i class="fas fa-plus"></i> Update Product</h1>
+                <form action="{% url 'update-bill' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ purchase.id }}">
+                    <div class="mb-3">
+                        <label for="item" class="form-label">Item</label>
+                        <div class="input-group">
+                            <input type="text" name="item" class="form-control" value="{{ purchase.item }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <div class="input-group">
+                            <input type="text" name="category" class="form-control" value="{{ purchase.category }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="order_no" class="form-label">Order No</label>
+                        <div class="input-group">
+                            <input type="text" name="order_no" class="form-control" value="{{ purchase.order_no }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-sort-numeric-up-alt"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <div class="input-group">
+                            <input type="number" name="amount" class="form-control" value="{{ purchase.amount }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="buyer" class="form-label">Customer Name</label>
+                        <div class="input-group">
+                            <input type="text" name="buyer" class="form-control" value="{{ purchase.buyer }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="seller" class="form-label">Seller Name</label>
+                        <div class="input-group">
+                            <input type="text" name="seller" class="form-control" value="{{ purchase.seller }}" readonly>
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-lg d-block mx-auto"><i class="fas fa-plus"></i> Generate Bill</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

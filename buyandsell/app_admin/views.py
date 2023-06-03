@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from authentication.models import CustomUser
-
+from app_seller.models import *
 # Create your views here.
 def adminpage(request):
     return render(request, 'admin/dashboard.html')
@@ -40,3 +40,41 @@ def delete_user(request, id):
     user = CustomUser.objects.get(id=id)
     user.delete()
     return redirect('list-user')
+
+def bill_list(request):
+    bills = Bill.objects.all()
+    context = {
+        'bills': bills
+     }
+    return render(request, 'admin/list_bill.html', context)
+
+def bill_view(request, id):
+    bill = Bill.objects.get(id=id)
+    excluding_vat = float(bill.amount) / 1.13
+    context = {
+        'bill': bill, 'excluding': excluding_vat
+     }
+    return render(request, 'admin/view_bill.html', context)
+
+
+
+def calculate_lifetime_earnings(bills):
+    lifetime_earnings = {}
+    
+    for bill in bills:
+        seller_name = bill.seller_name
+        amount = bill.amount
+        
+        if seller_name in lifetime_earnings:
+            lifetime_earnings[seller_name] += amount
+        else:
+            lifetime_earnings[seller_name] = amount
+    print(lifetime_earnings)
+    return lifetime_earnings
+
+def earning_list(request):
+    bills = Bill.objects.all()
+    lifetime_earnings = calculate_lifetime_earnings(bills)
+    context = {'lifetime_earnings': lifetime_earnings}
+    return render(request, 'admin/list_earning.html', context)
+

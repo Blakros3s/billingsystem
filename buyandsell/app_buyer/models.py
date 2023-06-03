@@ -9,6 +9,6 @@ class Purchase(models.Model):
     seller_username = models.CharField(max_length=200)
     buyer = models.CharField(max_length=200, default=None)
     buyer_username = models.CharField(max_length=200, default=None)
-    order_no = models.CharField(max_length=200, default=None)
+    order_no = models.CharField(max_length=200, unique=True, default=None)
     def __str__(self):
         return self.item
