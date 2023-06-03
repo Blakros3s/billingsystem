@@ -15,7 +15,6 @@
 
 
   <!-- Custom CSS -->
-  <link href="{% static 'css/offcanvas.css' %}" rel="stylesheet">
   {% block css %}
   {% endblock %}  
 </head>
@@ -23,25 +22,38 @@
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="#">Admin Panel</a>
+          <a class="navbar-brand" href="#">Dashboard</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+              {% if user.is_admin %}
               <li class="nav-item">
-                <a class="nav-link" href="#">Users</a>
+                <a class="nav-link" href="{% url 'list-user' %}">Users</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Billing</a>
+                <a class="nav-link" href="{% url 'all-bill' %}">Billing</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Earnings</a>
+                <a class="nav-link" href="{% url 'list-earning' %}">Earnings</a>
+              </li>
+              {% elif user.is_seller %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'list-product' %}">Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Products</a>
+                <a class="nav-link" href="{% url 'list-order' %}">Orders</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'list-bill' %}">Bills</a>
+              </li>
+              {% elif user.is_buyer %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'all-product' %}">Products</a>
+              </li>
+              {% endif %}
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">Logout</a>
               </li>
