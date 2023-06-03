@@ -1,12 +1,22 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import *
 from app_buyer.models import *
 import random
 
 # Create your views here.
+def is_seller(user):
+    return user.is_authenticated and user.is_seller
+
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def sellerpage(request):
     return render(request, 'seller/dashboard.html')
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def product_add(request):
     if request.method == "POST":
 
@@ -21,6 +31,10 @@ def product_add(request):
         return redirect('add-product')
     return render(request, 'seller/add_product.html')
 
+
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def product_list(request):
     products = Product.objects.all()
     context = {
@@ -28,16 +42,25 @@ def product_list(request):
      }
     return render(request, 'seller/list_product.html', context)
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def product_delete(request, id):
     product = Product.objects.get(id=id)
     product.delete()
     return redirect('list-product')
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def product_edit(request, id):
     product = Product.objects.get(id=id)
     context = {"product": product}
     return render(request, 'seller/edit_product.html', context)
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def product_update(request):
     if request.method == "POST":
         product_id = request.POST.get('id')
@@ -55,6 +78,9 @@ def product_update(request):
         return redirect('list-product')
     return redirect('list-product')
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def order_list(request):
     purchase = Purchase.objects.filter(seller_username=request.user.username)
     context = {
@@ -62,6 +88,9 @@ def order_list(request):
      }
     return render(request, 'seller/list_order.html', context)
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def bill_generate(request, id):
     purchase = Purchase.objects.get(id=id)
     context = {
@@ -69,6 +98,9 @@ def bill_generate(request, id):
      }
     return render(request, 'seller/generate_bill.html', context)
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def bill_update(request):
     if request.method == "POST":
         bill = Bill()
@@ -83,6 +115,9 @@ def bill_update(request):
         return redirect('list-order')
     return redirect('list-order')
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def bill_list(request):
     bills = Bill.objects.filter(seller_name=request.user.get_full_name())
     context = {
@@ -90,6 +125,9 @@ def bill_list(request):
      }
     return render(request, 'seller/list_bill.html', context)
 
+
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
 def bill_view(request, id):
     bill = Bill.objects.get(id=id)
     excluding_vat = float(bill.amount) / 1.13
