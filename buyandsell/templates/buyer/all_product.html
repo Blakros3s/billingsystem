@@ -1,0 +1,28 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    All Products
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>All Products</h1>
+    <div class="row mt-5">
+        {% for product in products %}
+            <div class="col-md-3">
+                <div class="card mb-4">
+                    <img src="{{ product.image.url }}" class="card-img-top mx-auto" alt="{{ product.title }}" style="max-height: 200px; width: 200px;">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ product.title }}</h5>
+                        <div class="text-center">
+                            <a href="{% url 'view-product' product.id %}" class="btn btn-secondary">View Product</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

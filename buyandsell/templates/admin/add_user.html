@@ -1,0 +1,67 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Add User
+{% endblock title %}
+
+{% block content %}
+<div class="container pt-5 d-flex align-items-center justify-content-center">
+  <div class="card w-75 bg-dark text-white">
+    <div class="card-header bg-black text-white text-center">
+      <h5><i class="fas fa-lock me-2"></i>Add a new user</h5>
+    </div>
+    <div class="card-body">
+      <form action="{% url 'add-user' %}" method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="text" name="first_name" class="form-control form-control-sm bg-dark text-white">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="text" name="last_name" class="form-control form-control-sm bg-dark text-white">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="email" name="email" class="form-control form-control-sm bg-dark text-white">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="text" name="username" class="form-control form-control-sm bg-dark text-white">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+            <input type="password" name="password" class="form-control form-control-sm bg-dark text-white">
+          </div>
+        </div>
+        <div class="mb-3">
+            <label for="user_type" class="form-label">User Type</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <select name="user_type" class="form-select form-select-sm bg-dark text-white">
+                <option value="admin">Admin</option>
+                <option value="buyer">Buyer</option>
+                <option value="seller">Seller</option>
+              </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-secondary col-12 mb-3">ADD USER</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

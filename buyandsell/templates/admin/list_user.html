@@ -1,0 +1,47 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    List User
+{% endblock title %}
+
+{% block content %}
+<div class="container pt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>User List</h1>
+        <a href="{% url 'add-user' %}" class="btn btn-secondary">Add User</a>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Roles</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            
+            {% if user.is_admin %}
+            <td>Admin</td>
+            {% elif user.is_seller %}
+            <td>Seller</td>
+            {% elif user.is_buyer %}
+            <td>Buyer</td>
+            {% endif %}
+            <td>
+              <a href="{% url 'delete-user' user.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

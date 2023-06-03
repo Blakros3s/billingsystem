@@ -1,0 +1,52 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Payment
+{% endblock title %}
+
+{% block content %}
+<div class="container pt-5 d-flex align-items-center justify-content-center">
+    <div class="card w-75">
+      <div class="card-header bg-secondary text-white text-center">
+        <h5><i class="fas fa-credit-card me-2"></i>Payment</h5>
+      </div>
+      <div class="card-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="card-number" class="form-label">Card Number</label>
+            <input type="text" name="card-number" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="card-holder" class="form-label">Card Holder</label>
+            <input type="text" name="card-holder" class="form-control">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="expiry-date" class="form-label">Expiry Date</label>
+                <input type="month" name="expiry-date" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="text" name="cvv" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount</label>
+            <input type="text" name="price" class="form-control" value="{{ product.price }}" readonly>
+          </div>
+          <input type="text" name="seller" class="form-control" value="{{ product.user.first_name }} {{ product.user.last_name }}" hidden>
+          <input type="text" name="username" class="form-control" value="{{ product.user.username }}" hidden>
+          <input type="text" name="title" class="form-control" value="{{ product.title }}" hidden>
+          <input type="text" name="category" class="form-control" value="{{ product.category }}" hidden>
+          <button type="submit" class="btn btn-secondary col-12 mb-3">Make Payment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

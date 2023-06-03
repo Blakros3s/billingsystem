@@ -1,0 +1,41 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+    View Product
+{% endblock title %}
+
+{% block content %}
+<div class="container pt-5">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">{{ product.title }}</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="{{ product.image.url }}" class="img-fluid mx-auto d-block" alt="{{ product.title }}" style="max-height: 400px; width: auto;">
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <input type="text" id="category" class="form-control" value="{{ product.category }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="seller" class="form-label">Seller</label>
+                        <input type="text" id="seller" class="form-control" value="{{ product.user.first_name }} {{ product.user.last_name }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" id="price" class="form-control" value="Rs. {{ product.price }}" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">Description</label>
+                        <input type="text" id="desc" class="form-control" value="{{ product.desc }}" readonly>
+                    </div>
+                    <a href="{% url 'payment' id=product.id %}" class="btn btn-secondary">Buy Product</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

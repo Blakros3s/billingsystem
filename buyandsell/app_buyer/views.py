@@ -1,3 +1,35 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from app_seller.models import Product
+from .models import *
 # Create your views here.
+def buyerpage(request):
+    return render(request, 'buyer/dashboard.html')
+
+
+def all_product(request):
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, 'buyer/all_product.html', context)
+
+def view_product(request, id):
+    product = Product.objects.get(id=id)
+    context = {"product": product} 
+    return render(request, 'buyer/view_product.html', context)
+
+def payment(request,id):
+    product = Product.objects.get(id=id)
+    context = {"product": product} 
+    return render(request, 'buyer/payment.html',context)
+
+def payment_update(request):
+    if request.method == "POST":
+        purchase = Purchase()
+        purchase.item = request.POST.get('title')
+        purchase.amount = request.POST.get('price')
+        purchase.category = request.POST.get('category')
+        purchase.seller = request.POST.get('seller')
+        purchase.seller_username = request.POST.get('username')
+        
+        purchase.save()
+        return redirect('all-product')
+    return redirect('all-product')

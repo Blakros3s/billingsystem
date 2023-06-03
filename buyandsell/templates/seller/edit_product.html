@@ -1,0 +1,57 @@
+_{% extends 'layouts/master.html' %}
+
+{% block title %}
+    Update Product
+{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h1 class="text-center mb-4"><i class="fas fa-plus"></i> Update Product</h1>
+                <form action="{% url 'update-product' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ product.id }}">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <div class="input-group">
+                            <input type="text" name="title" class="form-control" value="{{ product.title }}" placeholder="Enter product title">
+                            <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="desc" class="form-label">Description</label>
+                        <div class="input-group">
+                            <input type="text" name="desc" class="form-control" value="{{ product.desc }}" placeholder="Enter product description">
+                            <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <div class="input-group">
+                            <input type="text" name="category" class="form-control" value="{{ product.category }}" placeholder="Enter product category">
+                            <span class="input-group-text"><i class="fas fa-tag"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <div class="input-group">
+                            <input type="number" name="price" class="form-control" value="{{ product.price }}" placeholder="Enter product price">
+                            <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <div class="input-group">
+                            <input type="file" name="image" class="form-control">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-secondary btn-lg d-block mx-auto"><i class="fas fa-plus"></i> Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
