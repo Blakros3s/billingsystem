@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import *
+from app_buyer.models import *
 
 # Create your views here.
 def sellerpage(request):
@@ -52,3 +53,10 @@ def product_update(request):
         product.save()
         return redirect('list-product')
     return redirect('list-product')
+
+def order_list(request):
+    purchase = Purchase.objects.filter(seller_username=request.user.username)
+    context = {
+        'purchase': purchase
+     }
+    return render(request, 'seller/list_order.html', context)
