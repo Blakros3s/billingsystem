@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'app_admin',
     'app_buyer',
     'app_seller',
+    'restapi',
 ]
 
 MIDDLEWARE = [

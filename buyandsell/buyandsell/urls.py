@@ -26,7 +26,8 @@ urlpatterns = [
     path('buyer/', include('app_buyer.urls')),
     path('seller/', include('app_seller.urls')),
     path('', views.homepage, name='home'),
-    path('', include('authentication.urls'))
+    path('', include('authentication.urls')),
+    path('api/v1/', include('restapi.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
