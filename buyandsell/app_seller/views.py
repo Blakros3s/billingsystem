@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
 from .models import *
 from app_buyer.models import *
 import random
@@ -64,22 +65,23 @@ def product_edit(request, id):
     return render(request, 'seller/edit_product.html', context)
 
 
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
+@require_POST
 def product_update(request):
-    if request.method == "POST":
-        # update the product object and populate its fields with the form data
-        product_id = request.POST.get('id')
-        product = Product.objects.get(id=product_id)
-        product.title = request.POST.get('title')
-        product.desc = request.POST.get('desc')
-        product.category = request.POST.get('category')
-        product.price = request.POST.get('price')
-        
-        # Check if a new image was provided
-        if 'image' in request.FILES:
-            product.image = request.FILES['image']
-        
-        product.save()
-        return redirect('list-product')
+    # update the product object and populate its fields with the form data
+    product_id = request.POST.get('id')
+    product = Product.objects.get(id=product_id)
+    product.title = request.POST.get('title')
+    product.desc = request.POST.get('desc')
+    product.category = request.POST.get('category')
+    product.price = request.POST.get('price')
+
+    # Check if a new image was provided
+    if 'image' in request.FILES:
+        product.image = request.FILES['image']
+
+    product.save()
     return redirect('list-product')
 
 
@@ -106,19 +108,20 @@ def bill_generate(request, id):
 
 
 
+@login_required(login_url='/login/')
+@user_passes_test(is_seller)
+@require_POST
 def bill_update(request):
-    if request.method == "POST":
-        # Create a new Bill object and populate its fields with the form data
-        bill = Bill()
-        bill.item = request.POST.get('item')
-        bill.amount = request.POST.get('amount')
-        bill.category = request.POST.get('category')
-        bill.seller_name = request.POST.get('seller')
-        bill.customer_name = request.POST.get('buyer')
-        bill.order_no = request.POST.get('order_no')
-        bill.invoice_no = random.randint(10000000,100000000)
-        bill.save()
-        return redirect('list-order')
+    # Create a new Bill object and populate its fields with the form data
+    bill = Bill()
+    bill.item = request.POST.get('item')
+    bill.amount = request.POST.get('amount')
+    bill.category = request.POST.get('category')
+    bill.seller_name = request.POST.get('seller')
+    bill.customer_name = request.POST.get('buyer')
+    bill.order_no = request.POST.get('order_no')
+    bill.invoice_no = random.randint(10000000,100000000)
+    bill.save()
     return redirect('list-order')
 
 

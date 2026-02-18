@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.views.decorators.http import require_POST
 from app_seller.models import Product
 from .models import *
 import random
@@ -45,18 +46,19 @@ def payment(request,id):
 
 
 
+@login_required(login_url='/login/')
+@user_passes_test(is_buyer)
+@require_POST
 def payment_update(request):
-    if request.method == "POST":
-        # Create a new Purchase(order) object and populate its fields with the form data
-        purchase = Purchase()
-        purchase.item = request.POST.get('title')
-        purchase.amount = request.POST.get('price')
-        purchase.category = request.POST.get('category')
-        purchase.seller = request.POST.get('seller')
-        purchase.seller_username = request.POST.get('seller_username')
-        purchase.buyer = request.POST.get('buyer')
-        purchase.buyer_username = request.POST.get('buyer_username')
-        purchase.order_no = random.randint(1000000,10000000)
-        purchase.save()
-        return redirect('all-product')
+    # Create a new Purchase(order) object and populate its fields with the form data
+    purchase = Purchase()
+    purchase.item = request.POST.get('title')
+    purchase.amount = request.POST.get('price')
+    purchase.category = request.POST.get('category')
+    purchase.seller = request.POST.get('seller')
+    purchase.seller_username = request.POST.get('seller_username')
+    purchase.buyer = request.POST.get('buyer')
+    purchase.buyer_username = request.POST.get('buyer_username')
+    purchase.order_no = random.randint(1000000,10000000)
+    purchase.save()
     return redirect('all-product')
